@@ -15,10 +15,7 @@ module.exports = function (config) {
             '**/*.ts': ['webpack']
         },
         webpack: {
-            node: {
-                fs: 'empty',
-                child_process: 'empty'
-            },
+            node: false,
             resolve: {
                 extensions: ['.js', '.ts', '.tsx'],
                 plugins: [

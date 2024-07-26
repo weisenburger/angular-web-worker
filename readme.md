@@ -5,7 +5,7 @@ Schematics from the original package are not supported at the moment.
 
 # Getting Started
 
-### 1. Use an existing, or create a new Angular (v17+) app
+### 1. Use an existing, or create a new Angular (v18+) app
 
 ### 2. Install the library
 
