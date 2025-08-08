@@ -1,6 +1,6 @@
 {
   "name": "@wbds/angular-web-worker",
-  "version": "20.1.6",
+  "version": "20.1.6-rc.0",
   "description": "Library to assist with web worker communication in Angular apps",
   "main": "y",
   "scripts": {
