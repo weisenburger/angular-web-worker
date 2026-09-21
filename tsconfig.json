@@ -1,26 +1,24 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "strict": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "target": "ES2022",
+    "module": "preserve",
+    "lib": ["ES2022", "DOM"],
     "paths": {
-      "angular-web-worker/*": [
-        "./dist/*"
-      ]
+      "angular-web-worker": ["./dist"],
+      "angular-web-worker/*": ["./dist/*"]
     }
   },
   "exclude": [
-    "node_modules", "dist"
+    "node_modules",
+    "dist"
   ]
 }
