@@ -2,7 +2,6 @@
   "name": "@wbds/angular-web-worker",
   "version": "22.1.7",
   "description": "Library to assist with web worker communication in Angular apps",
-  "main": "y",
   "scripts": {
     "test": "karma start karma.conf.js",
     "build:pkg": "ts-node --project tsconfig.node.json package-script.ts --force",
