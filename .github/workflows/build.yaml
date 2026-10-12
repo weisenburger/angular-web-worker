@@ -3,32 +3,40 @@ name: Global build
 on:
   pull_request:
     branches: [ master ]
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [ 22.x ]
+        # Angular 22 supports ^22.22.3 || ^24.15.0 || >=26.0.0
+        node-version: [ 22.x, 24.x ]
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git fetch --no-tags --prune --depth=5 origin master
+      - uses: actions/checkout@v7
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
-      - run: npm install --legacy-peer-deps
+          cache: npm
+          # no package-lock.json in this repo (see .npmrc), so key the npm cache on package.json
+          cache-dependency-path: package.json
+
+      - run: npm install
+
+      - run: npm run lint
+
       - run: npm run build
-        env:
-          CI: true

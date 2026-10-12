@@ -4,6 +4,7 @@
   "description": "Library to assist with web worker communication in Angular apps",
   "scripts": {
     "test": "karma start karma.conf.js",
+    "lint": "tslint -p tsconfig.lib.json",
     "build:pkg": "ts-node --project tsconfig.node.json package-script.ts --force",
     "build": "npm run build:pkg"
   },
