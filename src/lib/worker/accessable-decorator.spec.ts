@@ -1,5 +1,5 @@
 import {Accessable} from './accessable-decorator';
-import {AccessableMetaData, WorkerAnnotations} from '../common/annotations';
+import {AccessableMetaData, WorkerAnnotations} from './common/annotations';
 
 
 class TestClassWithoutOptions {

@@ -2,9 +2,9 @@ import {Observable, Subject} from 'rxjs';
 import {Accessable, AngularWebWorker, Callable, OnWorkerInit, Subscribable} from '../worker';
 import {WorkerClient} from './worker-client';
 import {WorkerClientObservablesDict, WorkerClientRequestOpts} from './worker-client-types';
-import {SecretResult, WorkerEvent, WorkerEvents, WorkerObservableMessageTypes, WorkerRequestEvent, WorkerResponseEvent} from '../common/worker-events';
+import {SecretResult, WorkerEvent, WorkerEvents, WorkerObservableMessageTypes, WorkerRequestEvent, WorkerResponseEvent} from '../worker/common/worker-events';
 import {ClientWebWorker} from './client-web-worker';
-import {WorkerAnnotations} from '../common/annotations';
+import {WorkerAnnotations} from '../worker/common/annotations';
 
 class TestUser {
 
@@ -124,6 +124,7 @@ class FakeWorker implements Worker {
 
     onmessage(ev: MessageEvent) { }
     onerror(err: any) { }
+    onmessageerror(ev: MessageEvent) { }
     postMessage(resp: any) { }
     addEventListener() { }
     removeEventListener() { }
@@ -236,17 +237,17 @@ describe('WorkerClient: [angular-web-worker/angular]', () => {
             PrivateClientUtils.observables(client)['key'] = { subject: new Subject<any>(), subscription: null, observable: null, propertyName: 'event' };
         });
 
-        function event<T>(evt: T): WorkerEvent<WorkerResponseEvent<any>> {
+        function event(evt: any): WorkerEvent<WorkerResponseEvent<any>> {
             return new MessageEvent('TestEvent', {
                 data: evt
-            });
+            }) as WorkerEvent<WorkerResponseEvent<any>>;
         }
 
         it('Should trigger the response event when the message is not of the ObservableMessage type', () => {
             const evt = {
                 type: WorkerEvents.Accessable,
                 result: 'somevalue'
-            };
+            } as WorkerResponseEvent<any>;
             const spy = spyOn(client['responseEvent'], 'next');
             worker.onmessage(event(evt));
             expect(spy).toHaveBeenCalledWith(evt);
@@ -809,8 +810,9 @@ describe('WorkerClient: [angular-web-worker/angular]', () => {
 
         it('Should resolve with the newly created subscription', () => {
             const subject = new Subject<any>();
-            PrivateClientUtils.observables(client)['subscription-key'] = { propertyName: 'event', subject: subject, subscription: subject.subscribe(), observable: null };
-            expect(opts.resolve(response({ propertyName: 'event' }), secretResult(client), 'subscription-key')).toEqual(subject.subscribe());
+            const subscription = subject.subscribe();
+            PrivateClientUtils.observables(client)['subscription-key'] = { propertyName: 'event', subject: subject, subscription: subscription, observable: null };
+            expect(opts.resolve(response({ propertyName: 'event' }), secretResult(client), 'subscription-key')).toBe(subscription);
         });
 
         describe('createSubscription()', () => {
@@ -835,7 +837,7 @@ describe('WorkerClient: [angular-web-worker/angular]', () => {
             it('The subscription should subscribe the subject and act on the next event', () => {
                 const spy = spyOn(subscriptionMethods, 'next');
                 const key = client['createSubscription']('event', subscriptionMethods.next);
-                PrivateClientUtils.observables(client)[key].subject.next();
+                PrivateClientUtils.observables(client)[key].subject.next(undefined);
                 expect(spy).toHaveBeenCalled();
             });
 
@@ -972,7 +974,7 @@ describe('WorkerClient: [angular-web-worker/angular]', () => {
 });
 
 async function sleep(time) {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         setTimeout(() => {
             resolve();
         }, time);

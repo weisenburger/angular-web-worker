@@ -1,5 +1,5 @@
-import { Callable } from './public-api';
-import { WorkerAnnotations, CallableMetaData, WorkerConfig, SecretResult, WorkerEvents } from '../../common/src/public-api';
+import { Callable } from './public_api';
+import { WorkerAnnotations, CallableMetaData, WorkerConfig, SecretResult, WorkerEvents } from './common';
 
 class TestClassWithoutOptions {
     @Callable()

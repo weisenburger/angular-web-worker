@@ -1,5 +1,5 @@
 import {ShallowTransfer} from './shallow-transfer-decorator';
-import {ShallowTransferParamMetaData, WorkerAnnotations} from '../common/annotations';
+import {ShallowTransferParamMetaData, WorkerAnnotations} from './common/annotations';
 
 class TestClass {
     doSomething(name: string, @ShallowTransfer() age: number) {

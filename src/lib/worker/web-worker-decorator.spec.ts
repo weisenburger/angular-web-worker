@@ -1,6 +1,6 @@
-import { AngularWebWorker, Accessable, WorkerFactoryFunctions } from './public-api';
-import { WorkerAnnotations, WorkerConfig, WorkerEvents, SecretResult } from '../../common/src/public-api';
-import { Subscribable } from './public-api';
+import { AngularWebWorker, Accessable, WorkerFactoryFunctions } from './public_api';
+import { WorkerAnnotations, WorkerConfig, WorkerEvents, SecretResult } from './common';
+import { Subscribable } from './public_api';
 import { Subject } from 'rxjs';
 
 @AngularWebWorker()
