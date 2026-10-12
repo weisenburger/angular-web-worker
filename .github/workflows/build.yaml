@@ -32,10 +32,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-          # no package-lock.json in this repo (see .npmrc), so key the npm cache on package.json
-          cache-dependency-path: package.json
 
-      - run: npm install
+      - run: npm ci
 
       - run: npm run lint
 
