@@ -26,7 +26,7 @@ describe('WorkerModule: [angular-web-worker/angular]', () => {
                 WorkerModule.forWorkers([{ worker: TestClass, initFn: null }])
             ]
         });
-        const service = TestBed.get(WorkerManager);
+        const service = TestBed.inject(WorkerManager);
         expect(service).toEqual(new WorkerManager([{ worker: TestClass, initFn: null }]));
     });
 

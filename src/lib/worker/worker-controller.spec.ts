@@ -5,9 +5,9 @@ import {Subscribable} from './subscribable-decorator';
 import {OnWorkerInit} from './lifecycle-hooks';
 import {Callable} from './callable-decorator';
 import {ShallowTransfer} from './shallow-transfer-decorator';
-import {WorkerAccessableBody, WorkerCallableBody, WorkerEvents, WorkerObservableMessage, WorkerObservableMessageTypes, WorkerRequestEvent, WorkerResponseEvent, WorkerSubscribableBody} from '../common/worker-events';
+import {WorkerAccessableBody, WorkerCallableBody, WorkerEvents, WorkerObservableMessage, WorkerObservableMessageTypes, WorkerRequestEvent, WorkerResponseEvent, WorkerSubscribableBody} from './common/worker-events';
 import {WorkerController} from './worker-controller';
-import {WorkerAnnotations} from '../common/annotations';
+import {WorkerAnnotations} from './common/annotations';
 
 class TestUser {
 

@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import {SubscribableMetaData, WorkerAnnotations} from '../common/annotations';
+import {SubscribableMetaData, WorkerAnnotations} from './common/annotations';
 import {Subscribable} from './subscribable-decorator';
 
 class TestClass {
